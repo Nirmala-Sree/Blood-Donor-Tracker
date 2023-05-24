@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Blood Bank Management System</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: url('backgr.jpg') no-repeat center center fixed;
+      background-size: cover;
+    }
+    
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: rgba(255, 255, 255, 0.8);
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+    
+    h1 {
+      text-align: center;
+      margin-top: 0;
+      color: #FF0000;
+    }
+    
+    form {
+      max-width: 400px;
+      margin: 0 auto;
+    }
+    
+    label, input, select {
+      display: block;
+      margin-bottom: 10px;
+    }
+    
+    input[type="submit"] {
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+    }
+    
+    .donor-list {
+      max-width: 600px;
+      margin: 20px auto;
+    }
+    
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    
+    th, td {
+      padding: 8px;
+      border-bottom: 1px solid #ddd;
+      text-align: left;
+    }
+    
+    th {
+      background-color: #007bff;
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Blood Bank Management System</h1>
+    
+    <form id="donor-form">
+      <label for="name">Name:</label>
+      <input type="text" id="name" required>
+      
+      <label for="blood-group">Blood Group:</label>
+      <select id="blood-group" required>
+        <option value="">Select Blood Group</option>
+        <option value="A+">A+</option>
+        <option value="A-">A-</option>
+        <option value="B+">B+</option>
+        <option value="B-">B-</option>
+        <option value="AB+">AB+</option>
+        <option value="AB-">AB-</option>
+        <option value="O+">O+</option>
+        <option value="O-">O-</option>
+      </select>
+      
+      <input type="submit" value="Add Donor">
+    </form>
+    
+    <div class="donor-list">
+      <h2>Donor List</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Blood Group</th>
+          </tr>
+        </thead>
+        <tbody id="donor-table-body">
+        </tbody>
+      </table>
+    </div>
+  </div>
+  
+  <script>
+    // Array to store donors
+    const donors = [];
+    
+    // Function to add a donor
+    function addDonor(event) {
+      event.preventDefault();
+      
+     // Get input values
+      const nameInput = document.getElementById("name");
+      const bloodGroupSelect = document.getElementById("blood-group");
+      
+      const name = nameInput.value;
+      const bloodGroup = bloodGroupSelect.value;
+      
+      // Create donor object
+      const donor = { name, bloodGroup };
+      
+      // Add donor to the array
+      donors.push(donor);
+      
+      // Clear input values
+      nameInput.value = "";
+      bloodGroupSelect.value = "";
+      
+      // Update donor list
+      displayDonors();
+    }
+    
+    // Function to display donors in the table
+    function displayDonors() {
+      const tableBody = document.getElementById("donor-table-body");
+      tableBody.innerHTML = "";
+      
+      for (let i = 0; i < donors.length; i++) {
+        const donor = donors[i];
+        
+        const row = document.createElement("tr");
+        
+        const nameCell = document.createElement("td");
+        nameCell.textContent = donor.name;
+        
+        const bloodGroupCell = document.createElement("td");
+        bloodGroupCell.textContent = donor.bloodGroup;
+        
+        row.appendChild(nameCell);
+        row.appendChild(bloodGroupCell);
+        
+        tableBody.appendChild(row);
+      }
+    }
+    
+    // Attach form submit event listener
+    const form = document.getElementById("donor-form");
+    form.addEventListener("submit", addDonor);
+  </script>
+</body>
+</html>
